@@ -1,25 +1,67 @@
-alert('Boas vindas ao jogo do número secreto');
+let listOfDrawnNumbers = [];
+let limitNumber = 10;
+let secretNumber = generateRandomNumber();
+let tries = 1;
 
-let maximumNumber = 100; // número máximo que o sistema vai escolher //
-let secretNumber = parseInt(Math.random() * maximumNumber + 1);
-let guess; // chute do usuário //
-let tries = 1; // tentativas do usuário //
+function textDisplayScreen(tag, text) {
+    let field = document.querySelector(tag);
+    field.innerHTML = text;
+    responsiveVoice.speak(text, 'Brazilian Portuguese Female', {rate: 1.2});
+}
 
-// enquanto chute não for igual ao número secreto //
-while(guess != secretNumber){
-    guess = prompt(`Escolha um número entre 1 e ${maximumNumber}`);
-    // se o chute for igual ao número secreto //
-    if(guess == secretNumber){
-        break;  
-    } else{ //se for diferente//
-        if(guess > secretNumber){
-            alert(`O número secreto é menor que ${guess}`);
-        } else{
-            alert(`O número secreto é maior que ${guess}`);
+function initialTextDisplay(){
+    textDisplayScreen('h1', 'Jogo do número secreto');
+    textDisplayScreen('p', 'Escolha um número entre 1 e 10');
+}
+
+initialTextDisplay();
+
+
+function guessVerify() {
+    let guess = document.querySelector('input').value;
+    
+    if(guess == secretNumber) {
+        textDisplayScreen('h1', 'Você acertou!');
+        let triesWord = tries > 1 ? 'tentativas' : 'tentativa';
+        let triesMessage = `Você descobriu o número secreto com ${tries} ${triesWord}!`;
+        textDisplayScreen('p', triesMessage);
+        document.getElementById('reiniciar').removeAttribute('disabled');
+    } else {
+        if(guess > secretNumber) {
+            textDisplayScreen('p', 'O número secreto é menor');
+        } else {
+            textDisplayScreen('p', 'O número secreto é maior');
         }
         tries++;
+        cleanField();
     }
 }
 
-let tentativaWord = tries > 1 ? 'tentativas' : 'tentativa';
-alert(`Isso aí! Você descobriu o número secreto ${secretNumber} com ${tries} ${tentativaWord}.`);
+function generateRandomNumber() {
+    let choosenNumber = parseInt(Math.random() * limitNumber) + 1;
+    let numberOfElementsInTheList = listOfDrawnNumbers.length;
+
+    if(numberOfElementsInTheList == limitNumber){
+        listOfDrawnNumbers = [];
+    }
+
+    if(listOfDrawnNumbers.includes(choosenNumber)){
+        return generateRandomNumber();
+    } else {
+        listOfDrawnNumbers.push(choosenNumber);
+        return choosenNumber;
+    }
+}
+
+function cleanField() {
+    guess = document.querySelector('input');
+    guess.value = '';
+}
+
+function restartGame() {
+    secretNumber = generateRandomNumber();
+    cleanField();
+    tries = 1;
+    initialTextDisplay();
+    document.getElementById('reiniciar').setAttribute('disabled', true);
+}
