@@ -1,5 +1,6 @@
 # Número Secreto - Você consegue acertar?
-![Imagem que aparece quando o usuário acerta o número secreto. Um robozinho com a cor roxa ao lado esquerdo e ao lado direito a frase "Você acertou, você descobriu o número secreto!"](https://github.com/eprahoje/NumeroSecreto/assets/143037296/2ddb014b-2290-47aa-ab8d-3e16ba1048da)
+![Menu principal do jogo do número secreto com prompt de entrada para o usuário fazer uma tentativa de acertar o número](https://github.com/eprahoje/NumeroSecreto/assets/143037296/43f018f7-e1f4-4424-9d83-bcb1dee5c3aa)
+
 
 ![Badge estática JavaScript](https://img.shields.io/badge/JavaScript-F5F11D)
 
